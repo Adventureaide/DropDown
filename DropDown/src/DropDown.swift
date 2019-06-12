@@ -159,26 +159,25 @@ public final class DropDown: UIView {
         }
     }
 
-    public var customBorderColor: UIColor? {
-        set {
-            tableViewContainer.layer.borderColor = customBorderColor?.cgColor
+    public var customBorderWidth: CGFloat = 0.0 {
+        willSet {
+            tableViewContainer.layer.borderWidth = newValue
+            tableView.layer.borderWidth = newValue
         }
-        
-        get {
-            guard let cgColor = tableViewContainer.layer.borderColor else {return nil}
-            return UIColor(cgColor: cgColor)
-        }
+        didSet { reloadAllComponents() }
     }
     
-    public var customBorderWidth: CGFloat? {
-        set {
-            guard let width = customBorderWidth else {return}
-            tableViewContainer.layer.borderWidth = width
+    /**
+     The borderColor of DropDown.
+     
+     Changing the corner borderColor automatically reloads the drop down.
+     */
+    public var customBorderColor: CGColor = UIColor.clear.cgColor {
+        willSet {
+            tableViewContainer.layer.borderColor = newValue
+            tableView.layer.borderColor = newValue
         }
-        
-        get {
-            return tableViewContainer.layer.borderWidth
-        }
+        didSet { reloadAllComponents() }
     }
     
 	/**
@@ -569,6 +568,8 @@ private extension DropDown {
 		tableView.separatorColor = separatorColor
 		tableView.layer.cornerRadius = cornerRadius
 		tableView.layer.masksToBounds = true
+        tableView.layer.borderWidth = customBorderWidth
+        tableView.layer.borderColor = customBorderColor
 	}
 
 }
