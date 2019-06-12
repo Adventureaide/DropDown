@@ -159,6 +159,28 @@ public final class DropDown: UIView {
         }
     }
 
+    public var customBorderColor: UIColor? {
+        set {
+            tableViewContainer.layer.borderColor = customBorderColor?.cgColor
+        }
+        
+        get {
+            guard let cgColor = tableViewContainer.layer.borderColor else {return nil}
+            return UIColor(cgColor: cgColor)
+        }
+    }
+    
+    public var customBorderWidth: CGFloat? {
+        set {
+            guard let width = customBorderWidth else {return}
+            tableViewContainer.layer.borderWidth = width
+        }
+        
+        get {
+            return tableViewContainer.layer.borderWidth
+        }
+    }
+    
 	/**
 	arrowIndication.x
 
